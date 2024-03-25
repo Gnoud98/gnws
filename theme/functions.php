@@ -6,7 +6,7 @@
  *
  * @package gnws
  */
-
+$random_ver = rand( 1, 1000000000 );
 if ( ! defined( 'GNWS_VERSION' ) ) {
 	/*
 	 * Set the theme’s version number.
@@ -15,7 +15,7 @@ if ( ! defined( 'GNWS_VERSION' ) ) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define( 'GNWS_VERSION', '0.1.0' );
+	define( 'GNWS_VERSION',  $random_ver );
 }
 
 if ( ! defined( 'GNWS_TYPOGRAPHY_CLASSES' ) ) {
@@ -80,7 +80,7 @@ if ( ! function_exists( 'gnws_setup' ) ) :
 		// This theme uses wp_nav_menu() in two locations.
 		register_nav_menus(
 			array(
-				'menu-1' => __( 'Primary', 'gnws' ),
+				'menu-1' => __( 'Menu Chính', 'gnws' ),
 				'menu-2' => __( 'Footer Menu', 'gnws' ),
 			)
 		);
@@ -146,6 +146,24 @@ add_action( 'widgets_init', 'gnws_widgets_init' );
  */
 function gnws_scripts() {
 	wp_enqueue_style( 'gnws-style', get_stylesheet_uri(), array(), GNWS_VERSION );
+	//CSS
+	if ( is_404() )
+	{
+		wp_enqueue_style( 'gnws-404', get_template_directory_uri() . '/css/404.min.css', array(), GNWS_VERSION );
+	}
+	if ( class_exists( 'WooCommerce' ) )
+	{
+		wp_enqueue_style( 'gnws-woo', get_template_directory_uri() . '/css/woocommerce.min.css', array(), GNWS_VERSION );
+	}
+	if ( class_exists( 'WPCF7' ) )
+	{
+		wp_enqueue_script( 'gnws-jquery_alert', get_template_directory_uri() . '/assets/alert/js/cf7simplepopup-core.js', array(), GNWS_VERSION, true );
+		wp_enqueue_script( 'gnws-jquery_alert_main', get_template_directory_uri() . '/assets/alert/js/sweetalert2.all.min.js', array(), GNWS_VERSION, true );
+	}
+	wp_enqueue_style( 'gnws-css-flickity', get_template_directory_uri() . '/assets/lib/flickity.min.css' );
+
+	//JS
+	wp_enqueue_script( 'gnws-js-flickity', get_template_directory_uri() . '/assets/lib/flickity.pkgd.js', array(), GNWS_VERSION, true );
 	wp_enqueue_script( 'gnws-script', get_template_directory_uri() . '/js/script.min.js', array(), GNWS_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
