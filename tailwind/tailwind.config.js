@@ -12,7 +12,28 @@ module.exports = {
 	],
 	theme: {
 		// Extend the default Tailwind theme.
-		extend: {},
+		extend: {
+			colors: {
+				primary: '#3b3663',
+				secondary: '#f47514',
+				
+			},
+			fontFamily: {
+				body: ['SVN-Poppins', 'sans-serif'],
+			},
+
+		},
+		container: {
+			center: true,
+			padding: '1rem',
+			screens: {
+				sm: '600px',
+				md: '728px',
+				lg: '984px',
+				xl: '1240px',
+				'2xl': '1460px',
+			  },
+		},
 	},
 	corePlugins: {
 		// Disable Preflight base styles in builds targeting the editor.
