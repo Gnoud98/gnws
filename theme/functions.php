@@ -114,6 +114,20 @@ if ( ! function_exists( 'gnws_setup' ) ) :
 
 		// Add support for responsive embedded content.
 		add_theme_support( 'responsive-embeds' );
+	/**
+		 * Add support for core custom logo.
+		 *
+		 * @link https://codex.wordpress.org/Theme_Logo
+		 */
+		add_theme_support(
+			'custom-logo',
+			array(
+				'height' => 250,
+				'width' => 250,
+				'flex-width' => true,
+				'flex-height' => true,
+			)
+		);
 
 		// Remove support for block templates.
 		remove_theme_support( 'block-templates' );
