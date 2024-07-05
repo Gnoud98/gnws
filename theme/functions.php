@@ -177,6 +177,7 @@ function gnws_scripts() {
 	wp_enqueue_style( 'gnws-css-flickity', get_template_directory_uri() . '/assets/lib/flickity.min.css' );
 	wp_enqueue_style( 'gnws-css-font', get_template_directory_uri() . '/assets/fonts/font.css' );
 	wp_enqueue_style( 'gnws-style', get_stylesheet_uri(), array(), GNWS_VERSION );
+
 	//JS
 	wp_enqueue_script( 'gnws-js-flickity', get_template_directory_uri() . '/assets/lib/flickity.pkgd.js', array(), GNWS_VERSION, true );
 	wp_enqueue_script( 'gnws-script', get_template_directory_uri() . '/js/script.min.js', array(), GNWS_VERSION, true );
@@ -247,3 +248,28 @@ require get_template_directory() . '/inc/template-tags.php';
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
+
+
+/**
+ * Customizer additions.
+ */
+require get_template_directory() . '/inc/customizer.php';
+
+/**
+ * Customizer Wordpress.
+ */
+require get_template_directory() . '/inc/customizer-wp.php';
+
+/**
+ * Customizer Widget.
+ */
+require get_template_directory() . '/inc/customizer-widget.php';
+
+
+if ( class_exists( 'WooCommerce' ) )
+{
+	/**
+	 * Customizer Woocommerce.
+	 */
+	require get_template_directory() . '/inc/customizer-woo.php';
+}

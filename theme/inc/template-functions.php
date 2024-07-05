@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions which enhance the theme by hooking into WordPress
  *
@@ -6,201 +7,239 @@
  */
 
 /**
+ * Adds custom classes to the array of body classes.
+ *
+ * @param array $classes Classes for the body element.
+ * @return array
+ */
+function gnws_body_classes($classes)
+{
+	// Adds a class of hfeed to non-singular pages.
+	if (!is_singular()) {
+		$classes[] = 'hfeed';
+	}
+
+	// Adds a class of no-sidebar when there is no sidebar present.
+	if (!is_active_sidebar('sidebar-1')) {
+		$classes[] = 'no-sidebar';
+	}
+
+	return $classes;
+}
+add_filter('body_class', 'gnws_body_classes');
+
+/**
  * Add a pingback url auto-discovery header for single posts, pages, or attachments.
  */
-function gnws_pingback_header() {
-	if ( is_singular() && pings_open() ) {
-		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
+function gnws_pingback_header()
+{
+	if (is_singular() && pings_open()) {
+		printf('<link rel="pingback" href="%s">', esc_url(get_bloginfo('pingback_url')));
 	}
 }
-add_action( 'wp_head', 'gnws_pingback_header' );
+add_action('wp_head', 'gnws_pingback_header');
+
+if (!function_exists('wp_body_open')) :
+	/**
+	 * Shim for sites older than 5.2.
+	 *
+	 * @link https://core.trac.wordpress.org/ticket/12563
+	 */
+	function wp_body_open()
+	{
+		do_action('wp_body_open');
+	}
+endif;
 
 /**
- * Changes comment form default fields.
- *
- * @param array $defaults The default comment form arguments.
- *
- * @return array Returns the modified fields.
+ * Function help call file SVG from assets/svg
  */
-function gnws_comment_form_defaults( $defaults ) {
-	$comment_field = $defaults['comment_field'];
+function svg($name, $width = false, $height = false, $class = '')
+{
+    $dir  = TEMPLATEPATH . '/assets/svg/';
+    $path = $dir . $name . '.svg';
 
-	// Adjust height of comment form.
-	$defaults['comment_field'] = preg_replace( '/rows="\d+"/', 'rows="5"', $comment_field );
+    if ($name && file_exists($path)) {
+        $svg = file_get_contents($path);
+        $dom = new DOMDocument();
+        $dom->loadXML($svg);
 
-	return $defaults;
+        $svgElement = $dom->getElementsByTagName('svg')->item(0);
+
+        if ($width) {
+            $svgElement->setAttribute('width', $width . 'px');
+        }
+        if ($height) {
+            $svgElement->setAttribute('height', $height . 'px');
+        }
+        if ($class) {
+            $svgElement->setAttribute('class', $class);
+        }
+
+        return $dom->saveXML($svgElement);
+    }
+    return '';
 }
-add_filter( 'comment_form_defaults', 'gnws_comment_form_defaults' );
 
 /**
- * Filters the default archive titles.
+ * Function help call file SVG from url
  */
-function gnws_get_the_archive_title() {
-	if ( is_category() ) {
-		$title = __( 'Category Archives: ', 'gnws' ) . '<span>' . single_term_title( '', false ) . '</span>';
-	} elseif ( is_tag() ) {
-		$title = __( 'Tag Archives: ', 'gnws' ) . '<span>' . single_term_title( '', false ) . '</span>';
-	} elseif ( is_author() ) {
-		$title = __( 'Author Archives: ', 'gnws' ) . '<span>' . get_the_author_meta( 'display_name' ) . '</span>';
-	} elseif ( is_year() ) {
-		$title = __( 'Yearly Archives: ', 'gnws' ) . '<span>' . get_the_date( _x( 'Y', 'yearly archives date format', 'gnws' ) ) . '</span>';
-	} elseif ( is_month() ) {
-		$title = __( 'Monthly Archives: ', 'gnws' ) . '<span>' . get_the_date( _x( 'F Y', 'monthly archives date format', 'gnws' ) ) . '</span>';
-	} elseif ( is_day() ) {
-		$title = __( 'Daily Archives: ', 'gnws' ) . '<span>' . get_the_date() . '</span>';
-	} elseif ( is_post_type_archive() ) {
-		$cpt   = get_post_type_object( get_queried_object()->name );
-		$title = sprintf(
-			/* translators: %s: Post type singular name */
-			esc_html__( '%s Archives', 'gnws' ),
-			$cpt->labels->singular_name
-		);
-	} elseif ( is_tax() ) {
-		$tax   = get_taxonomy( get_queried_object()->taxonomy );
-		$title = sprintf(
-			/* translators: %s: Taxonomy singular name */
-			esc_html__( '%s Archives', 'gnws' ),
-			$tax->labels->singular_name
-		);
+function svg_dir($path, $width = false, $height = false)
+{
+	if ($path) {
+		$svg = file_get_contents($path);
+		if ($width) {
+			$size = '<svg';
+			$new_size = '<svg width="' . $width . 'px"';
+			$svg = str_replace($size, $new_size, $svg);
+		}
+		if ($height) {
+			$size = '<svg';
+			$new_size = '<svg height="' . $height . 'px"';
+			$svg = str_replace($size, $new_size, $svg);
+		}
+		return $svg;
+	}
+	return '';
+}
+
+if (!function_exists('gnws_post_thumbnail')) :
+	/**
+	 * Displays an optional post thumbnail.
+	 *
+	 * Wraps the post thumbnail in an anchor element on index views, or a div
+	 * element when on single views.
+	 */
+	function gnws_post_thumbnail()
+	{
+		if (post_password_required() || is_attachment() || !has_post_thumbnail()) {
+			echo get_stylesheet_directory_uri() . '/assets/svg/placeholder.svg';
+		} else {
+			the_post_thumbnail_url('thumbnail');
+		}
+	}
+endif;
+
+if (!function_exists('gnws_post_thumbnail_full')) :
+	/**
+	 * Displays an optional post thumbnail.
+	 *
+	 * Wraps the post thumbnail in an anchor element on index views, or a div
+	 * element when on single views.
+	 */
+	function gnws_post_thumbnail_full()
+	{
+		if (post_password_required() || is_attachment() || !has_post_thumbnail()) {
+			echo get_stylesheet_directory_uri() . '/assets/svg/placeholder.svg';
+		} else {
+			the_post_thumbnail_url();
+		}
+	}
+endif;
+
+/**
+ * Displays pagination style by number page
+ */
+function gnws_pagination()
+{
+
+	if (is_singular())
+		return;
+
+	global $wp_query;
+
+	/** Stop execution if there's only 1 page */
+	if ($wp_query->max_num_pages <= 1)
+		return;
+
+	$paged = get_query_var('paged') ? absint(get_query_var('paged')) : 1;
+	$max   = intval($wp_query->max_num_pages);
+
+	/** Add current page to the array */
+	if ($paged >= 1)
+		$links[] = $paged;
+
+	/** Add the pages around the current page to the array */
+	if ($paged >= 3) {
+		$links[] = $paged - 1;
+		$links[] = $paged - 2;
+	}
+
+	if (($paged + 2) <= $max) {
+		$links[] = $paged + 2;
+		$links[] = $paged + 1;
+	}
+
+	echo '<div class="gnws-pagination"><ul>' . "\n";
+
+	/** Previous Post Link */
+	if (get_previous_posts_link())
+		printf('<li>%s</li>' . "\n", get_previous_posts_link(svg('angle-left')));
+
+	/** Link to first page, plus ellipses if necessary */
+	if (!in_array(1, $links)) {
+		$class = 1 == $paged ? ' class="active"' : '';
+
+		printf('<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url(get_pagenum_link(1)), '1');
+
+		if (!in_array(2, $links))
+			echo '<li>…</li>';
+	}
+
+	/** Link to current page, plus 2 pages in either direction if necessary */
+	sort($links);
+	foreach ((array) $links as $link) {
+		$class = $paged == $link ? ' class="active"' : '';
+		printf('<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url(get_pagenum_link($link)), $link);
+	}
+
+	/** Link to last page, plus ellipses if necessary */
+	if (!in_array($max, $links)) {
+		if (!in_array($max - 1, $links))
+			echo '<li>…</li>' . "\n";
+
+		$class = $paged == $max ? ' class="active"' : '';
+		printf('<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url(get_pagenum_link($max)), $max);
+	}
+
+	/** Next Post Link */
+	if (get_next_posts_link())
+		printf('<li>%s</li>' . "\n", get_next_posts_link(svg('angle-right')));
+
+	echo '</ul></div>' . "\n";
+}
+
+
+/**
+ * Displays exceprt by number string
+ * How to use: echo excerpt(x) width x is number length
+ */
+function excerpt($limit)
+{
+	$excerpt = explode(' ', get_the_excerpt(), $limit);
+
+	if (count($excerpt) >= $limit) {
+		array_pop($excerpt);
+		$excerpt = implode(" ", $excerpt) . '...';
 	} else {
-		$title = __( 'Archives:', 'gnws' );
-	}
-	return $title;
-}
-add_filter( 'get_the_archive_title', 'gnws_get_the_archive_title' );
-
-/**
- * Determines whether the post thumbnail can be displayed.
- */
-function gnws_can_show_post_thumbnail() {
-	return apply_filters( 'gnws_can_show_post_thumbnail', ! post_password_required() && ! is_attachment() && has_post_thumbnail() );
-}
-
-/**
- * Returns the size for avatars used in the theme.
- */
-function gnws_get_avatar_size() {
-	return 60;
-}
-
-/**
- * Create the continue reading link
- *
- * @param string $more_string The string shown within the more link.
- */
-function gnws_continue_reading_link( $more_string ) {
-
-	if ( ! is_admin() ) {
-		$continue_reading = sprintf(
-			/* translators: %s: Name of current post. */
-			wp_kses( __( 'Continue reading %s', 'gnws' ), array( 'span' => array( 'class' => array() ) ) ),
-			the_title( '<span class="sr-only">"', '"</span>', false )
-		);
-
-		$more_string = '<a href="' . esc_url( get_permalink() ) . '">' . $continue_reading . '</a>';
+		$excerpt = implode(" ", $excerpt);
 	}
 
-	return $more_string;
+	$excerpt = preg_replace('`\[[^\]]*\]`', '', $excerpt);
+
+	return strip_tags($excerpt);
 }
 
-// Filter the excerpt more link.
-add_filter( 'excerpt_more', 'gnws_continue_reading_link' );
-
-// Filter the content more link.
-add_filter( 'the_content_more_link', 'gnws_continue_reading_link' );
-
 /**
- * Outputs a comment in the HTML5 format.
- *
- * This function overrides the default WordPress comment output in HTML5
- * format, adding the required class for Tailwind Typography. Based on the
- * `html5_comment()` function from WordPress core.
- *
- * @param WP_Comment $comment Comment to display.
- * @param array      $args    An array of arguments.
- * @param int        $depth   Depth of the current comment.
+ * Check Link
+ * If not return javascript:void(0)
  */
-function gnws_html5_comment( $comment, $args, $depth ) {
-	$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
 
-	$commenter          = wp_get_current_commenter();
-	$show_pending_links = ! empty( $commenter['comment_author'] );
-
-	if ( $commenter['comment_author_email'] ) {
-		$moderation_note = __( 'Your comment is awaiting moderation.', 'gnws' );
+function check_link($value)
+{
+	if ($value) {
+		return $value;
 	} else {
-		$moderation_note = __( 'Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved.', 'gnws' );
+		return 'javascript:void(0)';
 	}
-	?>
-	<<?php echo esc_attr( $tag ); ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $comment->has_children ? 'parent' : '', $comment ); ?>>
-		<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-			<footer class="comment-meta">
-				<div class="comment-author vcard">
-					<?php
-					if ( 0 !== $args['avatar_size'] ) {
-						echo get_avatar( $comment, $args['avatar_size'] );
-					}
-					?>
-					<?php
-					$comment_author = get_comment_author_link( $comment );
-
-					if ( '0' === $comment->comment_approved && ! $show_pending_links ) {
-						$comment_author = get_comment_author( $comment );
-					}
-
-					printf(
-						/* translators: %s: Comment author link. */
-						wp_kses_post( __( '%s <span class="says">says:</span>', 'gnws' ) ),
-						sprintf( '<b class="fn">%s</b>', wp_kses_post( $comment_author ) )
-					);
-					?>
-				</div><!-- .comment-author -->
-
-				<div class="comment-metadata">
-					<?php
-					printf(
-						'<a href="%s"><time datetime="%s">%s</time></a>',
-						esc_url( get_comment_link( $comment, $args ) ),
-						esc_attr( get_comment_time( 'c' ) ),
-						esc_html(
-							sprintf(
-							/* translators: 1: Comment date, 2: Comment time. */
-								__( '%1$s at %2$s', 'gnws' ),
-								get_comment_date( '', $comment ),
-								get_comment_time()
-							)
-						)
-					);
-
-					edit_comment_link( __( 'Edit', 'gnws' ), ' <span class="edit-link">', '</span>' );
-					?>
-				</div><!-- .comment-metadata -->
-
-				<?php if ( '0' === $comment->comment_approved ) : ?>
-				<em class="comment-awaiting-moderation"><?php echo esc_html( $moderation_note ); ?></em>
-				<?php endif; ?>
-			</footer><!-- .comment-meta -->
-
-			<div <?php gnws_content_class( 'comment-content' ); ?>>
-				<?php comment_text(); ?>
-			</div><!-- .comment-content -->
-
-			<?php
-			if ( '1' === $comment->comment_approved || $show_pending_links ) {
-				comment_reply_link(
-					array_merge(
-						$args,
-						array(
-							'add_below' => 'div-comment',
-							'depth'     => $depth,
-							'max_depth' => $args['max_depth'],
-							'before'    => '<div class="reply">',
-							'after'     => '</div>',
-						)
-					)
-				);
-			}
-			?>
-		</article><!-- .comment-body -->
-	<?php
 }

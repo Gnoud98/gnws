@@ -3,30 +3,3 @@
  *
  * These will be added immediately before Tailwind’s `base` layer.
  */
-
- /****************FONT*****************/
-@font-face {
-    font-family: "SVN-Poppins";
-    src: url(../tailwind/custom/fonts/SVN-PoppinsRegular.ttf);
-    font-weight: 400;
-}
-@font-face {
-    font-family: "SVN-Poppins";
-    src: url(../tailwind/custom/fonts/SVN-PoppinsMedium.ttf);
-    font-weight: 500;
-}
-@font-face {
-    font-family: "SVN-Poppins";
-    src: url(../tailwind/custom/fonts/SVN-PoppinsSemiBold.ttf);
-    font-weight: 600;
-}
-@font-face {
-    font-family: "SVN-Poppins";
-    src: url(../tailwind/custom/fonts/SVN-PoppinsBold.ttf);
-    font-weight: 700;
-}
-@font-face {
-    font-family: "SVN-Poppins";
-    src: url(../tailwind/custom/fonts/SVN-PoppinsExtraBold.ttf);
-    font-weight: 800;
-}
