@@ -159,8 +159,7 @@ add_action( 'widgets_init', 'gnws_widgets_init' );
  * Enqueue scripts and styles.
  */
 function gnws_scripts() {
-	wp_enqueue_style( 'gnws-style', get_stylesheet_uri(), array(), GNWS_VERSION );
-	//CSS
+	
 	if ( is_404() )
 	{
 		wp_enqueue_style( 'gnws-404', get_template_directory_uri() . '/css/404.min.css', array(), GNWS_VERSION );
