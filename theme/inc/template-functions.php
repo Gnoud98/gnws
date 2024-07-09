@@ -80,7 +80,37 @@ function svg($name, $width = false, $height = false, $class = '')
     }
     return '';
 }
+function svgpath($name, $width = false, $height = false, $class = '')
+{
+    $dir  = TEMPLATEPATH . '/assets/svg/';
+    $path = $dir . $name . '.svg';
 
+    if ($name && file_exists($path)) {
+        $svg = file_get_contents($path);
+        $dom = new DOMDocument();
+        $dom->loadXML($svg);
+
+        $svgElement = $dom->getElementsByTagName('svg')->item(0);
+
+        if ($width) {
+            $svgElement->setAttribute('width', $width . 'px');
+        }
+        if ($height) {
+            $svgElement->setAttribute('height', $height . 'px');
+        }
+        if ($class) {
+            $paths = $dom->getElementsByTagName('path');
+            foreach ($paths as $path) {
+                $existingClass = $path->getAttribute('class');
+                $newClass = $existingClass ? $existingClass . ' ' . $class : $class;
+                $path->setAttribute('class', $newClass);
+            }
+        }
+
+        return $dom->saveXML($svgElement);
+    }
+    return '';
+}
 /**
  * Function help call file SVG from url
  */

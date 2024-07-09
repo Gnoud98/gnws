@@ -3,14 +3,14 @@
 /**
  * Add template Woocommerce
  */
-function ws247_theme_woo()
+function gini_theme_woo()
 {
 
     // Declare WooTheme support
     // https://docs.woocommerce.com/document/third-party-custom-theme-compatibility/
     add_theme_support('woocommerce');
 }
-add_action('after_setup_theme', 'ws247_theme_woo');
+add_action('after_setup_theme', 'gini_theme_woo');
 
 /**
  * Chuyển Sale thành dạng +- %
@@ -33,6 +33,14 @@ function custom_product_sale_flash($output, $post, $product)
 }
 add_filter('woocommerce_sale_flash', 'custom_product_sale_flash', 11, 3);
 
+/**
+ * Remove WooCommerce breadcrumbs 
+ */
+add_action( 'init', 'my_remove_breadcrumbs' );
+
+function my_remove_breadcrumbs() {
+	remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );
+}
 
 /**
  * Add theme suopport gallery single product
