@@ -84,22 +84,22 @@ function cysp_acf_json_load_point( $paths ) {
  * Style Dashboard
  */
 //Css Admin
-// if (!function_exists('gnws_css_admin')) :
-//     add_action('admin_head', 'gnws_css_admin');
-//     add_action('admin_enqueue_scripts', 'gnws_css_admin');
-//     function gnws_css_admin()
-//     {
-//         wp_enqueue_style('admin_css', get_template_directory_uri() . '/admin/admin.css');
-//     }
-// endif;
-// //CSS Login
-// if (!function_exists('gnws_css_admin_login')) :
-//     add_action('login_enqueue_scripts', 'gnws_css_admin_login');
-//     function gnws_css_admin_login()
-//     {
-//         wp_enqueue_style('admin_login_css', get_template_directory_uri() . '/admin/login.css');
-//     }
-// endif;
+if (!function_exists('gnws_css_admin')) :
+    add_action('admin_head', 'gnws_css_admin');
+    add_action('admin_enqueue_scripts', 'gnws_css_admin');
+    function gnws_css_admin()
+    {
+        wp_enqueue_style('admin_css', get_template_directory_uri() . '/admin/admin.css');
+    }
+endif;
+//CSS Login
+if (!function_exists('gnws_css_admin_login')) :
+    add_action('login_enqueue_scripts', 'gnws_css_admin_login');
+    function gnws_css_admin_login()
+    {
+        wp_enqueue_style('admin_login_css', get_template_directory_uri() . '/admin/login.css');
+    }
+endif;
 
 /**
  * Create Option Page from ACF
