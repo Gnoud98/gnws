@@ -104,12 +104,12 @@ pre.wp-block-code {
     margin-bottom: 30px;
 }
 
-.the_content table > tbody > tr > td,
-.the_content table > tbody > tr > th,
-.the_content table > tfoot > tr > td,
-.the_content table > tfoot > tr > th,
-.the_content table > thead > tr > td,
-.the_content table > thead > tr > th {
+.the_content table:not(.shop_table) > tbody > tr > td,
+.the_content table:not(.shop_table) > tbody > tr > th,
+.the_content table:not(.shop_table) > tfoot > tr > td,
+.the_content table:not(.shop_table) > tfoot > tr > th,
+.the_content table:not(.shop_table) > thead > tr > td,
+.the_content table:not(.shop_table) > thead > tr > th {
     border: 1px solid #ddd;
     padding: 7px 10px;
 }

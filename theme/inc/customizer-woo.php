@@ -75,6 +75,7 @@ function remove_billing_phone_field($fields)
     unset($fields['billing_postcode']);
     unset($fields['billing_city']);
     unset($fields['billing_company']);
+    unset( $fields['billing_state'] );
     return $fields;
 }
 add_filter('woocommerce_shipping_fields', 'remove_shipping_phone_field', 20, 1);

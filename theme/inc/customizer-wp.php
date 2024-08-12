@@ -263,3 +263,24 @@ add_filter('wp_terms_checklist_args', function ($args, $idPost) {
 
     return $args;
 }, 10, 2);
+
+
+/**
+ * Disable Remove HTML ACF 6.2.5
+ */
+add_filter( 'acf/admin/prevent_escaped_html_notice', '__return_true' );
+add_filter( 'wp_kses_allowed_html', 'acf_add_allowed_iframe_tag', 10, 2 );
+function acf_add_allowed_iframe_tag( $tags, $context ) {
+	if ( $context === 'acf' )
+	{
+		$tags['iframe'] = array(
+			'src' => true,
+			'height' => true,
+			'width' => true,
+			'frameborder' => true,
+			'allowfullscreen' => true,
+		);
+	}
+
+	return $tags;
+}
