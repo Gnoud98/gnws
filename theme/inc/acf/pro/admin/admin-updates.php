@@ -136,8 +136,8 @@ if ( ! class_exists( 'ACF_Admin_Updates' ) ) :
 			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
 
 			// Check activate.
-			if ( acf_verify_nonce( 'activate_pro_license' ) && ! empty( $_POST['acf_pro_license'] ) ) {
-				acf_pro_activate_license( sanitize_text_field( $_POST['acf_pro_license'] ) ); //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- unslash not needed.
+			if ( acf_verify_nonce( 'activate_pro_license' ) ) {
+				acf_pro_activate_license( sanitize_text_field( $_POST['acf_pro_license'] ) );
 
 				// Check deactivate.
 			} elseif ( acf_verify_nonce( 'deactivate_pro_license' ) ) {

@@ -13,6 +13,8 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 
 		/**
 		 * Constructs the acf_revisions class.
+		 *
+		 * @return void
 		 */
 		public function __construct() {
 			add_action( 'wp_restore_post_revision', array( $this, 'wp_restore_post_revision' ), 10, 2 );
@@ -37,6 +39,8 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * For now, this is just our "_acf_changed" key that we use to detect if ACF fields have changed.
 		 *
 		 * @since 6.2.6
+		 *
+		 * @return void
 		 */
 		public function register_meta() {
 			register_meta(
@@ -111,18 +115,20 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 			acf_save_post_revision( $post_id );
 		}
 
-		/**
-		 * This function is used to trick WP into thinking that one of the $post's fields has changed and
-		 * will allow an autosave to be updated.
-		 * Fixes an odd bug causing the preview page to render the non autosave post data on every odd attempt
-		 *
-		 * @type    function
-		 * @date    21/10/2014
-		 * @since   5.1.0
-		 *
-		 * @param   $fields (array)
-		 * @return  $fields
-		 */
+		/*
+		*  wp_preview_post_fields
+		*
+		*  This function is used to trick WP into thinking that one of the $post's fields has changed and
+		*  will allow an autosave to be updated.
+		*  Fixes an odd bug causing the preview page to render the non autosave post data on every odd attempt
+		*
+		*  @type    function
+		*  @date    21/10/2014
+		*  @since   5.1.0
+		*
+		*  @param   $fields (array)
+		*  @return  $fields
+		*/
 
 		function wp_preview_post_fields( $fields ) {
 
@@ -141,18 +147,20 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		}
 
 
-		/**
-		 * This filter will return false and force WP to save a revision. This is required due to
-		 * WP checking only post_title, post_excerpt and post_content values, not custom fields.
-		 *
-		 * @type    filter
-		 * @date    19/09/13
-		 *
-		 * @param   $return (boolean) defaults to true
-		 * @param   $last_revision (object) the last revision that WP will compare against
-		 * @param   $post (object) the $post object that WP will compare against
-		 * @return  $return (boolean)
-		 */
+		/*
+		*  wp_save_post_revision_check_for_changes
+		*
+		*  This filter will return false and force WP to save a revision. This is required due to
+		*  WP checking only post_title, post_excerpt and post_content values, not custom fields.
+		*
+		*  @type    filter
+		*  @date    19/09/13
+		*
+		*  @param   $return (boolean) defaults to true
+		*  @param   $last_revision (object) the last revision that WP will compare against
+		*  @param   $post (object) the $post that WP will compare against
+		*  @return  $return (boolean)
+		*/
 
 		function wp_save_post_revision_check_for_changes( $return, $last_revision, $post ) {
 
@@ -166,17 +174,19 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		}
 
 
-		/**
-		 * This filter will add the ACF fields to the returned array
-		 * Versions 3.5 and 3.6 of WP feature different uses of the revisions filters, so there are
-		 * some hacks to allow both versions to work correctly
-		 *
-		 * @type    filter
-		 * @date    11/08/13
-		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
-		 */
+		/*
+		*  wp_post_revision_fields
+		*
+		*  This filter will add the ACF fields to the returned array
+		*  Versions 3.5 and 3.6 of WP feature different uses of the revisions filters, so there are
+		*  some hacks to allow both versions to work correctly
+		*
+		*  @type    filter
+		*  @date    11/08/13
+		*
+		*  @param   $post_id (int)
+		*  @return  $post_id (int)
+		*/
 
 		function wp_post_revision_fields( $fields, $post = null ) {
 
@@ -285,18 +295,20 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		}
 
 
-		/**
-		 * This filter will load the value for the given field and return it for rendering
-		 *
-		 * @type    filter
-		 * @date    11/08/13
-		 *
-		 * @param   $value (mixed) should be false as it has not yet been loaded
-		 * @param   $field_name (string) The name of the field
-		 * @param   post (mixed) Holds the $post object to load from - in WP 3.5, this is not passed!
-		 * @param   $direction (string) to / from - not used
-		 * @return  $value (string)
-		 */
+		/*
+		*  wp_post_revision_field
+		*
+		*  This filter will load the value for the given field and return it for rendering
+		*
+		*  @type    filter
+		*  @date    11/08/13
+		*
+		*  @param   $value (mixed) should be false as it has not yet been loaded
+		*  @param   $field_name (string) The name of the field
+		*  @param   $post (mixed) Holds the $post object to load from - in WP 3.5, this is not passed!
+		*  @param   $direction (string) to / from - not used
+		*  @return  $value (string)
+		*/
 		function wp_post_revision_field( $value, $field_name, $post = null, $direction = false ) {
 
 			// bail early if is empty.
@@ -327,15 +339,17 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		}
 
 
-		/**
-		 * This action will copy and paste the metadata from a revision to the post
-		 *
-		 * @type    action
-		 * @date    11/08/13
-		 *
-		 * @param   $parent_id (int) the destination post
-		 * @return  $revision_id (int) the source post
-		 */
+		/*
+		*  wp_restore_post_revision
+		*
+		*  This action will copy and paste the metadata from a revision to the post
+		*
+		*  @type    action
+		*  @date    11/08/13
+		*
+		*  @param   $parent_id (int) the destination post
+		*  @return  $revision_id (int) the source post
+		*/
 
 		function wp_restore_post_revision( $post_id, $revision_id ) {
 
@@ -355,17 +369,19 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		}
 
 
-		/**
-		 * This function will modify the $post_id and allow loading values from a revision
-		 *
-		 * @type    function
-		 * @date    6/3/17
-		 * @since   5.5.10
-		 *
-		 * @param   $post_id (int)
-		 * @param   $_post_id (int)
-		 * @return  $post_id (int)
-		 */
+		/*
+		*  acf_validate_post_id
+		*
+		*  This function will modify the $post_id and allow loading values from a revision
+		*
+		*  @type    function
+		*  @date    6/3/17
+		*  @since   5.5.10
+		*
+		*  @param   $post_id (int)
+		*  @param   $_post_id (int)
+		*  @return  $post_id (int)
+		*/
 
 		function acf_validate_post_id( $post_id, $_post_id ) {
 
@@ -425,16 +441,19 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 endif; // class_exists check
 
 
-/**
- * This function will copy meta from a post to it's latest revision
- *
- * @type    function
- * @date    26/09/2016
- * @since   5.4.0
- *
- * @param   $post_id (int)
- * @return  n/a
- */
+/*
+*  acf_save_post_revision
+*
+*  This function will copy meta from a post to it's latest revision
+*
+*  @type    function
+*  @date    26/09/2016
+*  @since   5.4.0
+*
+*  @param   $post_id (int)
+*  @return  n/a
+*/
+
 function acf_save_post_revision( $post_id = 0 ) {
 
 	// get latest revision
@@ -447,16 +466,19 @@ function acf_save_post_revision( $post_id = 0 ) {
 }
 
 
-/**
- * This function will return the latest revision for a given post
- *
- * @type    function
- * @date    25/06/2016
- * @since   5.3.8
- *
- * @param   $post_id (int)
- * @return  $post_id (int)
- */
+/*
+*  acf_get_post_latest_revision
+*
+*  This function will return the latest revision for a given post
+*
+*  @type    function
+*  @date    25/06/2016
+*  @since   5.3.8
+*
+*  @param   $post_id (int)
+*  @return  $post_id (int)
+*/
+
 function acf_get_post_latest_revision( $post_id ) {
 
 	// vars

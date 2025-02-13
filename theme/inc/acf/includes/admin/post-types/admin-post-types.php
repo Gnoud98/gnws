@@ -38,7 +38,10 @@ if ( ! class_exists( 'ACF_Admin_Post_Types' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @since 6.2
+		 * @date    5/03/2014
+		 * @since   6.2
+		 *
+		 * @return  void
 		 */
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'admin_menu' ), 8 );
@@ -48,6 +51,8 @@ if ( ! class_exists( 'ACF_Admin_Post_Types' ) ) :
 
 		/**
 		 * Renders HTML for the ACF PRO features upgrade notice.
+		 *
+		 * @return void
 		 */
 		public function include_pro_features() {
 			// Bail if on PRO.
@@ -66,7 +71,9 @@ if ( ! class_exists( 'ACF_Admin_Post_Types' ) ) :
 		/**
 		 * Current screen actions for the post types list admin page.
 		 *
-		 * @since 6.1
+		 * @since   6.1
+		 *
+		 * @return  void
 		 */
 		public function current_screen() {
 			// Bail early if not post types admin page.
@@ -309,8 +316,8 @@ if ( ! class_exists( 'ACF_Admin_Post_Types' ) ) :
 		 *
 		 * @since 6.1
 		 *
-		 * @param string  $action The action being performed.
-		 * @param integer $count  The number of items the action was performed on.
+		 * @param string $action The action being performed.
+		 * @param int    $count  The number of items the action was performed on.
 		 * @return string
 		 */
 		public function get_action_notice_text( $action, $count = 1 ) {

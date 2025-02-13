@@ -312,14 +312,10 @@ if ( ! class_exists( 'ACF_Post_Type' ) ) {
 		 *
 		 * @since 6.1
 		 *
-		 * @return boolean validity status
+		 * @return bool validity status
 		 */
 		public function ajax_validate_values() {
-			if ( empty( $_POST['acf_post_type']['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified elsewhere.
-				return false;
-			}
-
-			$post_type_key = acf_sanitize_request_args( wp_unslash( $_POST['acf_post_type']['post_type'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified elsewhere.
+			$post_type_key = acf_sanitize_request_args( $_POST['acf_post_type']['post_type'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified elsewhere.
 			$post_type_key = is_string( $post_type_key ) ? $post_type_key : '';
 			$valid         = true;
 
@@ -340,9 +336,8 @@ if ( ! class_exists( 'ACF_Post_Type' ) ) {
 				acf_add_internal_post_type_validation_error( 'post_type', $message );
 			} else {
 				// Check if this post key exists in the ACF store for registered post types, excluding those which failed registration.
-				$store   = acf_get_store( $this->store );
-				$post_id = (int) acf_maybe_get_POST( 'post_id', 0 );
-
+				$store      = acf_get_store( $this->store );
+				$post_id    = (int) acf_sanitize_request_args( $_POST['post_id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified elsewhere.
 				$matches    = array_filter(
 					$store->get_data(),
 					function ( $item ) use ( $post_type_key ) {
@@ -382,7 +377,7 @@ if ( ! class_exists( 'ACF_Post_Type' ) ) {
 		 *
 		 * @since 6.1
 		 *
-		 * @param  array   $post          The main ACF post type settings array.
+		 * @param  array   $post The main ACF post type settings array.
 		 * @param  boolean $escape_labels Determines if the label values should be escaped.
 		 * @return array
 		 */
@@ -507,6 +502,7 @@ if ( ! class_exists( 'ACF_Post_Type' ) ) {
 			}
 
 			// TODO: We don't handle the `capabilities` arg at the moment, but may in the future.
+
 			// WordPress defaults to the "title" and "editor" supports, but none can be provided by passing false (WP 3.5+).
 			$supports = is_array( $post['supports'] ) ? $post['supports'] : array();
 			$supports = array_unique( array_filter( array_map( 'strval', $supports ) ) );
@@ -773,6 +769,7 @@ if ( ! class_exists( 'ACF_Post_Type' ) ) {
 			}
 
 			// TODO: Investigate CPTUI usage of with_feeds, pages settings.
+
 			// ACF handles capability type differently.
 			if ( isset( $args['capability_type'] ) ) {
 				if ( 'post' !== trim( $args['capability_type'] ) ) {

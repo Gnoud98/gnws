@@ -26,15 +26,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * get_name
+		 *  get_name
 		 *
-		 * This function will return the Tool's name
+		 *  This function will return the Tool's name
 		 *
-		 * @date    19/10/17
-		 * @since   5.6.3
+		 *  @date    19/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  n/a
+		 *  @param   n/a
+		 *  @return  n/a
 		 */
 
 		function get_name() {
@@ -43,15 +43,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * get_title
+		 *  get_title
 		 *
-		 * This function will return the Tool's title
+		 *  This function will return the Tool's title
 		 *
-		 * @date    19/10/17
-		 * @since   5.6.3
+		 *  @date    19/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  n/a
+		 *  @param   n/a
+		 *  @return  n/a
 		 */
 
 		function get_title() {
@@ -60,15 +60,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * get_url
+		 *  get_url
 		 *
-		 * This function will return the Tool's title
+		 *  This function will return the Tool's title
 		 *
-		 * @date    19/10/17
-		 * @since   5.6.3
+		 *  @date    19/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  n/a
+		 *  @param   n/a
+		 *  @return  n/a
 		 */
 
 		function get_url() {
@@ -77,15 +77,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * is_active
+		 *  is_active
 		 *
-		 * This function will return true if the tool is active
+		 *  This function will return true if the tool is active
 		 *
-		 * @date    19/10/17
-		 * @since   5.6.3
+		 *  @date    19/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  boolean
+		 *  @param   n/a
+		 *  @return  bool
 		 */
 
 		function is_active() {
@@ -93,16 +93,18 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 		}
 
 
-		/**
-		 * This function will setup the class functionality
-		 *
-		 * @type    function
-		 * @date    27/6/17
-		 * @since   5.6.0
-		 *
-		 * @param   n/a
-		 * @return  n/a
-		 */
+		/*
+		*  __construct
+		*
+		*  This function will setup the class functionality
+		*
+		*  @type    function
+		*  @date    27/6/17
+		*  @since   5.6.0
+		*
+		*  @param   n/a
+		*  @return  n/a
+		*/
 
 		function __construct() {
 
@@ -112,15 +114,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * initialize
+		 *  initialize
 		 *
-		 * This function will initialize the admin tool
+		 *  This function will initialize the admin tool
 		 *
-		 * @date    10/10/17
-		 * @since   5.6.3
+		 *  @date    10/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  n/a
+		 *  @param   n/a
+		 *  @return  n/a
 		 */
 
 		function initialize() {
@@ -131,15 +133,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * load
+		 *  load
 		 *
-		 * This function is called during the admin page load
+		 *  This function is called during the admin page load
 		 *
-		 * @date    10/10/17
-		 * @since   5.6.3
+		 *  @date    10/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  n/a
+		 *  @param   n/a
+		 *  @return  n/a
 		 */
 
 		function load() {
@@ -149,15 +151,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * html
+		 *  html
 		 *
-		 * This function will output the metabox HTML
+		 *  This function will output the metabox HTML
 		 *
-		 * @date    10/10/17
-		 * @since   5.6.3
+		 *  @date    10/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  n/a
+		 *  @param   n/a
+		 *  @return  n/a
 		 */
 
 		function html() {
@@ -165,15 +167,15 @@ if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 
 		/**
-		 * submit
+		 *  submit
 		 *
-		 * This function will run when the tool's form has been submit
+		 *  This function will run when the tool's form has been submit
 		 *
-		 * @date    10/10/17
-		 * @since   5.6.3
+		 *  @date    10/10/17
+		 *  @since   5.6.3
 		 *
-		 * @param   n/a
-		 * @return  n/a
+		 *  @param   n/a
+		 *  @return  n/a
 		 */
 
 		function submit() {
