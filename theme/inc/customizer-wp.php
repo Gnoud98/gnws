@@ -284,3 +284,5 @@ function acf_add_allowed_iframe_tag( $tags, $context ) {
 
 	return $tags;
 }
+
+add_filter('wpcf7_autop_or_not', '__return_false');
