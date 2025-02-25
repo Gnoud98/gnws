@@ -1,7 +1,7 @@
 <?php
 
 /**
-Template Name: Trang chủ
+Template Name: Giao diện
  */
 
 get_header();
