@@ -1,58 +1,59 @@
 <?php
-class gnws_sidebar_widget extends WP_Widget
-{
-    function __construct()
-    {
+// class gnws_sidebar_widget extends WP_Widget
+// {
+//     function __construct()
+//     {
 
-        parent::__construct(
+//         parent::__construct(
 
-            'gnws_sidebar_widget',
+//             'gnws_sidebar_widget',
 
-            'Widget',
+//             'Widget',
 
-            array('description'  =>  'Widget hiển thị Widget')
+//             array('description'  =>  'Widget hiển thị Widget')
 
-        );
-    }
-
-
-
-    function form($instance)
-    {
-
-        $default = array();
-
-        $instance = wp_parse_args((array) $instance, $default);
-    }
+//         );
+//     }
 
 
 
-    function update($new_instance, $old_instance)
-    {
+//     function form($instance)
+//     {
 
-        $instance = $old_instance;
+//         $default = array();
 
-        return $instance;
-    }
+//         $instance = wp_parse_args((array) $instance, $default);
+//     }
 
 
 
-    function widget($args, $instance)
-    {
+//     function update($new_instance, $old_instance)
+//     {
 
-        extract($args);
-?>
-        
-        
+//         $instance = $old_instance;
 
-    <?php
+//         return $instance;
+//     }
 
-    }
-}
-add_action('widgets_init', 'create_gnws_sidebar_widget');
 
-function create_gnws_sidebar_widget()
-{
 
-    register_widget('gnws_sidebar_widget');
-}
+//     function widget($args, $instance)
+//     {
+
+//         extract($args);
+// ?>
+
+
+
+//
+<?php
+
+//     }
+// }
+// add_action('widgets_init', 'create_gnws_sidebar_widget');
+
+// function create_gnws_sidebar_widget()
+// {
+
+//     register_widget('gnws_sidebar_widget');
+// }

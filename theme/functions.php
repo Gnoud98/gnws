@@ -15,7 +15,7 @@ if ( ! defined( 'GNWS_VERSION' ) ) {
 	 * to create your production build, the value below will be replaced in the
 	 * generated zip file with a timestamp, converted to base 36.
 	 */
-	define( 'GNWS_VERSION',  $random_ver );
+	define( 'GNWS_VERSION', $random_ver );
 }
 
 if ( ! defined( 'GNWS_TYPOGRAPHY_CLASSES' ) ) {
@@ -114,7 +114,7 @@ if ( ! function_exists( 'gnws_setup' ) ) :
 
 		// Add support for responsive embedded content.
 		add_theme_support( 'responsive-embeds' );
-	/**
+		/**
 		 * Add support for core custom logo.
 		 *
 		 * @link https://codex.wordpress.org/Theme_Logo
@@ -143,13 +143,13 @@ add_action( 'after_setup_theme', 'gnws_setup' );
 function gnws_widgets_init() {
 	register_sidebar(
 		array(
-			'name'          => __( 'Footer', 'gnws' ),
-			'id'            => 'sidebar-1',
-			'description'   => __( 'Add widgets here to appear in your footer.', 'gnws' ),
+			'name' => __( 'Footer', 'gnws' ),
+			'id' => 'sidebar-1',
+			'description' => __( 'Add widgets here to appear in your footer.', 'gnws' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
+			'after_widget' => '</section>',
+			'before_title' => '<h2 class="widget-title">',
+			'after_title' => '</h2>',
 		)
 	);
 }
@@ -159,32 +159,22 @@ add_action( 'widgets_init', 'gnws_widgets_init' );
  * Enqueue scripts and styles.
  */
 function gnws_scripts() {
-	
-	if ( is_404() )
-	{
-		wp_enqueue_style( 'gnws-404', get_template_directory_uri() . '/css/404.min.css', array(), GNWS_VERSION );
-	}
-	if ( class_exists( 'WooCommerce' ) )
-	{
-		wp_enqueue_style( 'gnws-woo', get_template_directory_uri() . '/css/woocommerce.min.css', array(), GNWS_VERSION );
-	}
-	if ( class_exists( 'WPCF7' ) )
-	{
-		wp_enqueue_style( 'gnws-alert', get_template_directory_uri() . '/assets/alert/css/cf7simplepopup-core.css', array(), GNWS_VERSION );
-		wp_enqueue_script( 'gnws-jquery_alert', get_template_directory_uri() . '/assets/alert/js/cf7simplepopup-core.js', array(), GNWS_VERSION, true );
-		wp_enqueue_script( 'gnws-jquery_alert_main', get_template_directory_uri() . '/assets/alert/js/sweetalert.js', array(), GNWS_VERSION, true );
-	}
-	wp_enqueue_style( 'gnws-fancybox', get_template_directory_uri() . '/assets/lib/jquery.fancybox.css' );
-	wp_enqueue_style( 'gnws-css-flickity', get_template_directory_uri() . '/assets/lib/flickity.min.css' );
-	wp_enqueue_style( 'gnws-css-font', get_template_directory_uri() . '/assets/fonts/font.css' );
+	// if ( class_exists( 'WPCF7' ) ) {
+	// 	wp_enqueue_style( 'gnws-alert', get_template_directory_uri() . '/assets/alert/css/cf7simplepopup-core.css', array(), GNWS_VERSION );
+	// 	wp_enqueue_script( 'gnws-jquery_alert', get_template_directory_uri() . '/assets/alert/js/cf7simplepopup-core.js', array(), GNWS_VERSION, true );
+	// 	wp_enqueue_script( 'gnws-jquery_alert_main', get_template_directory_uri() . '/assets/alert/js/sweetalert.js', array(), GNWS_VERSION, true );
+	// }
+	// wp_enqueue_style( 'gnws-fancybox', get_template_directory_uri() . '/assets/lib/jquery.fancybox.css' );
+	// wp_enqueue_style( 'gnws-css-flickity', get_template_directory_uri() . '/assets/lib/flickity.min.css' );
+	// wp_enqueue_style( 'gnws-css-font', get_template_directory_uri() . '/assets/fonts/font.css' );
 	wp_enqueue_style( 'gnws-style', get_stylesheet_uri(), array(), GNWS_VERSION );
 
-	//JS
-	wp_enqueue_script( 'gnws-js-flickity', get_template_directory_uri() . '/assets/lib/flickity.pkgd.js', array(), GNWS_VERSION, true );
-	wp_enqueue_script( 'gnws-js-fancybox', get_template_directory_uri() . '/assets/lib/jquery.fancybox.js', array(), GNWS_VERSION, true );
+	// //JS
+	// wp_enqueue_script( 'gnws-js-flickity', get_template_directory_uri() . '/assets/lib/flickity.pkgd.js', array(), GNWS_VERSION, true );
+	// wp_enqueue_script( 'gnws-js-fancybox', get_template_directory_uri() . '/assets/lib/jquery.fancybox.js', array(), GNWS_VERSION, true );
 	wp_enqueue_script( 'gnws-script', get_template_directory_uri() . '/js/script.min.js', array(), GNWS_VERSION, true );
 
-	wp_localize_script( 'gnws-script', 'ajaxurl',array('ajaxurl'=>admin_url( 'admin-ajax.php')));
+	wp_localize_script( 'gnws-script', 'ajaxurl', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -244,20 +234,9 @@ function gnws_tinymce_add_class( $settings ) {
 add_filter( 'tiny_mce_before_init', 'gnws_tinymce_add_class' );
 
 /**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
-
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
 
 /**
  * Customizer Wordpress.
@@ -270,10 +249,3 @@ require get_template_directory() . '/inc/customizer-wp.php';
 require get_template_directory() . '/inc/customizer-widget.php';
 
 
-if ( class_exists( 'WooCommerce' ) )
-{
-	/**
-	 * Customizer Woocommerce.
-	 */
-	require get_template_directory() . '/inc/customizer-woo.php';
-}
