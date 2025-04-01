@@ -9,16 +9,9 @@
  * @package gnws
  */
 
+get_template_part('template-parts/layout/footer', 'content');
+
+wp_footer();
 ?>
-<footer>
-
-</footer>
-<div
-	class="back-to-top fixed bottom-14 right-7 w-10 h-10 rounded-full m-auto bg-slate-200  cursor-pointer transition-all duration-500 hover:bg-primary text-primary hover:text-white">
-	<?php echo svg( 'back-top', '20','20','m-auto h-full' ) ?>
-</div>
-<?php wp_footer(); ?>
-
 </body>
-
 </html>

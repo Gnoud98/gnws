@@ -23,6 +23,4 @@
 
 <?php wp_body_open(); ?>
 
-<header>
-	
-</header>
+<?php get_template_part('template-parts/layout/header', 'content'); ?>

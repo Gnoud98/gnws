@@ -9,7 +9,7 @@
 $random_ver = rand( 1, 1000000000 );
 if ( ! defined( 'GNWS_VERSION' ) ) {
 	/*
-	 * Set the theme’s version number.
+	 * Set the theme's version number.
 	 *
 	 * This is used primarily for cache busting. If you use `npm run bundle`
 	 * to create your production build, the value below will be replaced in the
@@ -30,10 +30,10 @@ if ( ! defined( 'GNWS_TYPOGRAPHY_CLASSES' ) ) {
 	 * For the block editor, these classes are converted to a JavaScript array
 	 * and then used by the `./javascript/block-editor.js` file, which adds
 	 * them to the appropriate elements in the block editor (and adds them
-	 * again when they’re removed.)
+	 * again when they're removed.)
 	 *
 	 * For the classic editor (and anything using TinyMCE, like Advanced Custom
-	 * Fields), these classes are added to TinyMCE’s body class when it
+	 * Fields), these classes are added to TinyMCE's body class when it
 	 * initializes.
 	 */
 	define(
@@ -247,5 +247,6 @@ require get_template_directory() . '/inc/customizer-wp.php';
  * Customizer Widget.
  */
 require get_template_directory() . '/inc/customizer-widget.php';
+
 
 
