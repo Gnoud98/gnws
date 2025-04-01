@@ -259,3 +259,46 @@ function acf_add_allowed_iframe_tag( $tags, $context ) {
 
 	return $tags;
 }
+
+/**
+ * Disable XMLRPC
+ */
+add_filter( 'xmlrpc_enabled', '__return_false' );
+// Disable X-Pingback to header
+add_filter( 'wp_headers', 'disable_x_pingback' );
+function disable_x_pingback( $headers ) {
+	unset( $headers['X-Pingback'] );
+	return $headers;
+}
+function remove_xmlrpc_methods( $methods ) {
+	return array();
+}
+add_filter( 'xmlrpc_methods', 'remove_xmlrpc_methods' );
+remove_action( 'wp_head', 'rsd_link' );
+
+
+/**
+ * Disable Rest  API
+ */
+
+add_filter( 'rest_authentication_errors', function ($result) {
+	// If a previous authentication check was applied,
+	// pass that result along without modification.
+	if ( true === $result || is_wp_error( $result ) ) {
+		return $result;
+	}
+
+	// No authentication has been performed yet.
+	// Return an error if user is not logged in.
+	if ( ! is_user_logged_in() && empty( $_POST['_wpcf7'] ) ) {
+		return new WP_Error(
+			'rest_not_logged_in',
+			__( 'You are not currently logged in.' ),
+			array( 'status' => 401 )
+		);
+	}
+
+	// Our custom authentication check should have no effect
+	// on logged-in requests
+	return $result;
+} );
