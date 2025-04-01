@@ -141,7 +141,7 @@
     <div class="border-t border-[#1E2544] bg-[#080F2E]">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-row justify-between items-center">
-                <p class="text-gray-400 !text-[10px] md:!text-[14px]mb-0">©2024 BOGOS: Free gift. All Rights Reserved</p>
+                <p class="text-white !text-[10px] md:!text-[14px]  mb-0">©2024 BOGOS: Free gift. All Rights Reserved</p>
                 <div class="flex items-center space-x-6">
                     <a href="#facebook" class="text-gray-400 hover:text-white">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/facebook.svg" class="w-7 h-7" alt="Facebook" />
