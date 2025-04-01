@@ -302,3 +302,16 @@ add_filter( 'rest_authentication_errors', function ($result) {
 	// on logged-in requests
 	return $result;
 } );
+
+/**
+ * Remove Version Number
+ */
+// Remove version number from WordPress
+// Pick out the version number from scripts and styles
+function remove_version_from_style_js( $src ) {
+if ( strpos( $src, 'ver=' . get_bloginfo( 'version' ) ) )
+$src = remove_query_arg( 'ver', $src );
+return $src;
+}
+add_filter( 'style_loader_src', 'remove_version_from_style_js');
+add_filter( 'script_loader_src', 'remove_version_from_style_js');
