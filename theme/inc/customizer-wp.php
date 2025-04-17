@@ -315,3 +315,5 @@ return $src;
 }
 add_filter( 'style_loader_src', 'remove_version_from_style_js');
 add_filter( 'script_loader_src', 'remove_version_from_style_js');
+
+add_filter( 'wpcf7_autop_or_not', '__return_false' );
