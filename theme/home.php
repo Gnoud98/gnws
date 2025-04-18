@@ -20,7 +20,7 @@ get_header();
 		endwhile;
 	}
 	?>
-	<h1 class="d-none">
+	<h1 class="hidden">
 		<?php echo wp_title() ?>
 	</h1>
 
