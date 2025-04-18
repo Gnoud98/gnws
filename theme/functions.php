@@ -164,14 +164,15 @@ function gnws_scripts() {
 	// 	wp_enqueue_script( 'gnws-jquery_alert', get_template_directory_uri() . '/assets/alert/js/cf7simplepopup-core.js', array(), GNWS_VERSION, true );
 	// 	wp_enqueue_script( 'gnws-jquery_alert_main', get_template_directory_uri() . '/assets/alert/js/sweetalert.js', array(), GNWS_VERSION, true );
 	// }
-	// wp_enqueue_style( 'gnws-fancybox', get_template_directory_uri() . '/assets/lib/jquery.fancybox.css' );
-	// wp_enqueue_style( 'gnws-css-flickity', get_template_directory_uri() . '/assets/lib/flickity.min.css' );
-	// wp_enqueue_style( 'gnws-css-font', get_template_directory_uri() . '/assets/fonts/font.css' );
+	// wp_enqueue_style( 'gnws-fancybox', get_template_directory_uri() . '/assets/libs/jquery.fancybox.css' );
+	// wp_enqueue_style( 'gnws-css-flickity', get_template_directory_uri() . '/assets/libs/flickity.min.css' );
+	wp_enqueue_style( 'gnws-css-font', get_template_directory_uri() . '/assets/fonts/font.css' );
 	wp_enqueue_style( 'gnws-style', get_stylesheet_uri(), array(), GNWS_VERSION );
 
 	// //JS
-	// wp_enqueue_script( 'gnws-js-flickity', get_template_directory_uri() . '/assets/lib/flickity.pkgd.js', array(), GNWS_VERSION, true );
-	// wp_enqueue_script( 'gnws-js-fancybox', get_template_directory_uri() . '/assets/lib/jquery.fancybox.js', array(), GNWS_VERSION, true );
+	 wp_enqueue_script('jquery' );
+	// wp_enqueue_script( 'gnws-js-flickity', get_template_directory_uri() . '/assets/libs/flickity.pkgd.js', array(), GNWS_VERSION, true );
+	// wp_enqueue_script( 'gnws-js-fancybox', get_template_directory_uri() . '/assets/libs/jquery.fancybox.js', array(), GNWS_VERSION, true );
 	wp_enqueue_script( 'gnws-script', get_template_directory_uri() . '/js/script.min.js', array(), GNWS_VERSION, true );
 
 	wp_localize_script( 'gnws-script', 'ajaxurl', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
